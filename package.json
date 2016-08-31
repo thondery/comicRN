@@ -1,12 +1,20 @@
 {
   "name": "comicRN",
   "version": "0.0.1",
+  "description": "comic for React-Native App",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
     "react": "15.3.1",
-    "react-native": "0.32.0"
-  }
+    "react-native": "0.32.0",
+    "react-native-vector-icons": "^2.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://git.coding.net/yshuyu/comicRN.git"
+  },
+  "author": "thondery <thondery@163.com>",
+  "license": "MIT"
 }
