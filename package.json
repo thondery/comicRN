@@ -11,6 +11,13 @@
     "react-native": "0.32.0",
     "react-native-vector-icons": "^2.1.0"
   },
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-react-native": "^1.9.0",
+    "eslint": "^3.4.0",
+    "eslint-plugin-react": "^6.2.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://git.coding.net/yshuyu/comicRN.git"

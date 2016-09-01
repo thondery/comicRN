@@ -11,7 +11,7 @@ export default StyleSheet.create({
     //display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingTop: 2
+    //paddingTop: 1
   },
   item: {
     //flex: 1,
@@ -22,7 +22,10 @@ export default StyleSheet.create({
   },
   itemText: {
     fontSize: 12,
-    color: "#666",
+    color: '#666',
     paddingTop: 3
+  },
+  selectItemText: {
+    color: '#f60'
   }
 })

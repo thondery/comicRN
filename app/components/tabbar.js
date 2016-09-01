@@ -1,59 +1,89 @@
 'use strict'
 
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import {
   Text,
   View,
-  TabBarIOS
+  TouchableOpacity
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import styles from './tabbar.styles'
 
-const Items = [
-  {
-    name: '首页',
-    icon: 'home'
-  },
-  {
-    name: '书架',
-    icon: 'leanpub'
-  },
-  {
-    name: '操场',
-    icon: 'commenting-o'
-  },
-  {
-    name: '我的',
-    icon: 'user'
-  },
-]
-
 class TabBar extends Component {
+  static propTypes = {
+    Items: PropTypes.array.isRequired,
+    refreshState: PropTypes.func
+  }
+
+  static defaultProps = {
+    Items: [],
+    refreshState: () => null
+  }
+
+  constructor(props){
+    super(props)
+    this.state = {
+      activeIndex: 0
+    }
+  }
 
   render () {
+    let { Items } = this.props
+    let { activeIndex } = this.state
     return (
       <View style={styles.container}>
       {
         Items.map( (item, i) => {
+          let active = i === activeIndex
           return (
-            <TabBarItem key={i} title={item.name} iconName={item.icon} />
+            <TouchableOpacity style={styles.item} key={i} 
+                              onPress={this._handleClick.bind(this, i)} >
+              <TabBarItem title={item.name} 
+                          iconName={item.icon}
+                          color={active ? '#f60' : '#666' }
+                          active={active} />
+            </TouchableOpacity>
           )
         })
       }
       </View>
     )
   }
+
+  _handleClick (index) {
+    let { activeIndex } = this.state
+    let { refreshState } = this.props
+    if (activeIndex !== index) {
+      this.setState({
+        activeIndex: index
+      })
+      refreshState(index)
+    }
+  }
 }
 
 class TabBarItem extends Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    iconName: PropTypes.string.isRequired,
+    color: PropTypes.string,
+    active: PropTypes.bool
+  }
+
+  static defaultProps = {
+    title: '首页',
+    iconName: 'home',
+    color: '#666',
+    active: false
+  }
 
   render () {
-    let { title, iconName } = this.props
+    let { title, iconName, color, active } = this.props
     return (
       <View style={styles.item}>
-        <Icon name={iconName} size={20} color="#666" />
-        <Text style={styles.itemText}>{title}</Text>
+        <Icon name={iconName} size={20} color={color} />
+        <Text style={[styles.itemText, active ? styles.selectItemText : null]}>{title}</Text>
       </View>
     )
   }
