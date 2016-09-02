@@ -9,8 +9,6 @@ import {
 import styles from './main.styles'
 import TabBar from './components/tabbar'
 import config from './config'
-import HomePane from './pane/home'
-//import BookShelfPane from './pane/bookshelf'
 import Pane from './components/pane'
 
 class App extends Component {
@@ -18,15 +16,27 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      tabIndex: 0
+      tabIndex: 0,
+      currentPage: {
+        home: 0,
+        bookshelf: 0
+      },
+      paneIndex: {
+        home: 0,
+        bookshelf: 0
+      },
+      currentPageHome: 0,
+      currentPageBook: 0
     }
   }
 
   render() {
-    let { tabIndex } = this.state
+    let { tabIndex, currentPage, paneIndex } = this.state
     return (
       <View style={styles.container}>
-        <Pane tabIndex={tabIndex} />
+        <Pane tabIndex={tabIndex}
+              paneIndex={paneIndex}
+              refreshState={this._refreshState.bind(this, 'currentPage')} />
         <TabBar Items={config.TabBar}
                 refreshState={this._refreshState.bind(this, 'tabIndex')} />
       </View>
@@ -36,7 +46,26 @@ class App extends Component {
   _refreshState (key, val) {
     let temp = {}
     temp[key] = val
-    this.setState(temp)
+    if (key === 'tabIndex' && this.state.tabIndex !== temp.tabIndex) {
+      temp.paneIndex = {
+        home: this.state.currentPageHome,
+        bookshelf: this.state.currentPageBook
+      }
+    }
+    if (key === 'currentPage' && val.home) {
+      this.setState({
+        currentPageHome: val.home
+      })
+    }
+    else if (key === 'currentPage' && val.bookshelf) {
+      this.setState({
+        currentPageBook: val.bookshelf
+      })
+    }
+    else {
+      this.setState(temp)
+    }
+    
   }
 }
 
